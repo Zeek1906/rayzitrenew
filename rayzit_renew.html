@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAYZIT Renew</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #212730;
+    --blue: #0074FF;
+    --gold: #FBBE01;
+    --green: #4FB96D;
+    --bg: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --card-bg: #f8f9ff;
+    --radius: 16px;
+    --shadow: 0 4px 24px rgba(33,39,48,0.08);
+    --shadow-hover: 0 8px 32px rgba(33,39,48,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; }
+
+  .navbar { background: #fff; border-bottom: 1px solid var(--border); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .nav-logo-text { font-weight: 900; font-size: 17px; letter-spacing: 2px; color: var(--navy); }
+  .nav-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--navy); background: rgba(33,39,48,0.06); border: 1px solid rgba(33,39,48,0.15); padding: 5px 12px; border-radius: 999px; text-transform: uppercase; }
+
+  .progress-wrap { background: var(--navy); padding: 12px 28px; }
+  .progress-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+  .progress-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); text-transform: uppercase; white-space: nowrap; }
+  .progress-bar-wrap { flex: 1; background: rgba(255,255,255,0.15); border-radius: 999px; height: 6px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--gold); border-radius: 999px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); width: 0%; }
+  .progress-count { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 1px; white-space: nowrap; }
+
+  .hero { background: linear-gradient(135deg, rgba(33,39,48,0.92) 0%, rgba(0,116,255,0.75) 100%), #212730; padding: 56px 28px 52px; text-align: center; }
+  .hero-tag { display: inline-block; background: var(--gold); color: #000; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; padding: 5px 14px; border-radius: 999px; margin-bottom: 16px; text-transform: uppercase; font-weight: 700; }
+  .hero h1 { font-size: 34px; font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 10px; }
+  .hero h1 span { color: var(--gold); }
+  .hero p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.7; max-width: 480px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+  .hero-stat-num { font-size: 22px; font-weight: 900; color: var(--gold); display: block; }
+  .hero-stat-label { font-size: 10px; color: rgba(255,255,255,0.6); font-family: 'Space Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+
+  .content { max-width: 800px; margin: 0 auto; padding: 0 16px; }
+
+  .phase-header { display: flex; align-items: center; gap: 12px; padding: 28px 0 12px; flex-wrap: wrap; }
+  .phase-badge { background: var(--navy); color: #fff; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; padding: 5px 14px; border-radius: 999px; text-transform: uppercase; white-space: nowrap; }
+  .phase-title { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .phase-line { flex: 1; height: 2px; background: var(--border); min-width: 20px; }
+
+  /* INLINE VIDEO PLAYER */
+  .video-player-card { background: #000; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-bottom: 8px; }
+  .video-player-label { background: var(--navy); padding: 12px 16px; display: flex; align-items: center; gap: 8px; }
+  .video-player-label-text { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: #fff; }
+  .video-player-badge { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: #000; background: var(--gold); padding: 3px 9px; border-radius: 999px; text-transform: uppercase; font-weight: 700; }
+  .video-player-body { position: relative; padding-bottom: 56.25%; height: 0; }
+  .video-player-body iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+  .step-card { background: #fff; border: 2px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; transition: all 0.2s; cursor: pointer; box-shadow: var(--shadow); }
+  .step-card:hover { border-color: var(--blue); box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .step-card.completed { border-color: var(--green); background: #f0fdf4; }
+  .step-card.active { border-color: var(--blue); box-shadow: var(--shadow-hover); }
+
+  .step-header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; }
+  .step-check { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; color: transparent; transition: all 0.3s; background: #f9f9f9; }
+  .step-card.completed .step-check { background: var(--green); border-color: var(--green); color: #fff; }
+  .step-card.active .step-check { border-color: var(--blue); }
+  .step-num-badge { background: var(--navy); color: #fff; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-card.completed .step-num-badge { background: var(--green); }
+  .step-info { flex: 1; min-width: 0; }
+  .step-name { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; line-height: 1.3; }
+  .step-card.completed .step-name { color: var(--muted); text-decoration: line-through; }
+  .step-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .badge { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; }
+  .badge-required { background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.2); color: #dc2626; }
+  .badge-next { background: rgba(0,116,255,0.08); border: 1px solid rgba(0,116,255,0.2); color: var(--blue); }
+  .step-chevron { color: var(--muted); font-size: 20px; transition: transform 0.2s; flex-shrink: 0; }
+  .step-card.open .step-chevron { transform: rotate(90deg); }
+
+  .step-body { display: none; border-top: 2px solid var(--border); animation: fadeIn 0.2s ease; }
+  .step-card.open .step-body { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  .step-body-inner { padding: 18px; }
+  .step-description { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 14px; }
+
+  .tip-box { background: #fff9e6; border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 14px; font-size: 13px; color: #555; line-height: 1.5; }
+  .tip-box strong { color: #92400e; font-size: 10px; font-family: 'Space Mono', monospace; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 3px; }
+
+  .step-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border: none; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
+  .btn-navy { background: var(--navy); color: #fff; }
+  .btn-navy:hover { background: #2e3740; }
+  .btn-blue { background: var(--blue); color: #fff; }
+  .btn-blue:hover { background: #005fcc; }
+  .btn-gold { background: var(--gold); color: #000; }
+  .btn-gold:hover { background: #e6ac00; }
+
+  .mark-done-btn { width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .mark-done-btn:hover { background: #005fcc; }
+  .step-card.completed .mark-done-btn { background: #e5f5ec; color: var(--green); border: 2px solid var(--green); }
+
+  .complete-banner { display: none; margin: 24px 0; background: linear-gradient(135deg, var(--navy), #1a3a5c); border-radius: var(--radius); padding: 36px 24px; text-align: center; }
+  .complete-banner.visible { display: block; }
+  .complete-banner h2 { font-size: 24px; font-weight: 900; color: var(--gold); margin-bottom: 8px; }
+  .complete-banner p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+
+  /* LOGISTICS INFO CARD */
+  .info-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 12px; }
+  .info-card p { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 14px; }
+  .info-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .info-card ul li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #444; line-height: 1.6; }
+  .sni { background: var(--navy); color: #fff; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+  /* APPOINTMENT SECTION */
+  .appt-section { background: #fff; border: 2px solid var(--border); border-radius: var(--radius); padding: 22px; margin: 24px 0; box-shadow: var(--shadow); }
+  .appt-title { font-weight: 800; font-size: 16px; color: var(--navy); margin-bottom: 6px; }
+  .appt-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
+  .appt-divider { display: flex; align-items: center; gap: 10px; margin: 14px 0; }
+  .appt-divider-line { flex: 1; height: 1px; background: var(--border); }
+  .appt-divider-text { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+  .appt-form { display: flex; flex-direction: column; gap: 10px; }
+  .appt-form input, .appt-form textarea { background: #f9fafb; border: 2px solid var(--border); border-radius: 10px; padding: 11px 14px; font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--text); width: 100%; outline: none; transition: border-color 0.2s; }
+  .appt-form input:focus, .appt-form textarea:focus { border-color: var(--blue); }
+  .appt-form textarea { resize: vertical; min-height: 76px; }
+  .appt-submit { background: var(--navy); color: #fff; border: none; border-radius: 999px; padding: 12px; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .appt-submit:hover { background: #2e3740; }
+  .appt-submit:disabled { background: #9ca3af; cursor: not-allowed; }
+  .appt-sent { display: none; text-align: center; padding: 16px; color: var(--green); font-size: 14px; font-weight: 600; }
+  .appt-error { display: none; text-align: center; padding: 10px; color: #dc2626; font-size: 13px; }
+
+  .contact-card { background: linear-gradient(135deg, var(--navy), #1a3a5c); border-radius: var(--radius); padding: 22px; display: flex; align-items: center; justify-content: center; gap: 16px; margin: 24px 0; }
+  @media (max-width: 640px) { .contact-card { flex-direction: column; text-align: center; } }
+  .contact-info { text-align: center; }
+  .contact-info h3 { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+  .contact-info p { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.4; }
+  .contact-badge { display: inline-block; margin-top: 5px; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: #000; background: var(--gold); padding: 3px 10px; border-radius: 999px; text-transform: uppercase; font-weight: 700; }
+
+  .footer { text-align: center; padding: 28px 16px; border-top: 2px solid var(--border); margin-top: 32px; }
+  .footer-sub { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; }
+
+  @media (max-width: 600px) {
+    .navbar { padding: 12px 16px; }
+    .nav-tag { display: none; }
+    .hero { padding: 36px 16px 32px; }
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 13px; }
+    .hero-stats { gap: 16px; }
+    .hero-stat-num { font-size: 18px; }
+    .progress-wrap { padding: 10px 16px; }
+    .progress-label { display: none; }
+    .content { padding: 0 12px; }
+    .step-header { padding: 14px 12px; gap: 8px; }
+    .step-name { font-size: 13px; }
+    .step-body-inner { padding: 14px; }
+    .step-actions { flex-direction: column; }
+    .btn { justify-content: center; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo-text">RAYZIT</div>
+  <span class="nav-tag">Renew</span>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-label">Your Progress</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <span class="progress-count" id="progressCount">0 of 2 complete</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-tag">RAYZIT Renew</div>
+  <h1>Let's Get Your<br><span>Renew Program Started.</span></h1>
+  <p>Watch the intro, complete your liability waiver, and schedule time with a RAYZIT Renew Specialist. Two steps and your organization is ready to start receiving surplus goods.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">2</span>
+      <span class="hero-stat-label">Steps to Start</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">~3 min</span>
+      <span class="hero-stat-label">Intro Video</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">24hr</span>
+      <span class="hero-stat-label">Support Response</span>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+<div class="phase-header">
+  <span class="phase-badge">Start Here</span>
+  <span class="phase-title">Watch the Welcome Video</span>
+  <div class="phase-line"></div>
+</div>
+
+<div class="video-player-card">
+  <div class="video-player-label">
+    <span class="video-player-label-text">The RAYZIT Renew Welcome</span>
+    <span class="video-player-badge">Watch First</span>
+  </div>
+  <div class="video-player-body">
+    <iframe src="https://drive.google.com/file/d/1CzXkX0xEI6jFZVECdqpFCCrQ9AGHGrLO/preview" allow="autoplay" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="phase-header">
+  <span class="phase-badge">Next</span>
+  <span class="phase-title">RAYZIT Renew Steps</span>
+  <div class="phase-line"></div>
+</div>
+
+<div class="step-card" id="step-1" onclick="toggleStep(1)">
+  <div class="step-header">
+    <div class="step-check" id="check-1">✓</div>
+    <div class="step-num-badge">1</div>
+    <div class="step-info">
+      <div class="step-name">Review and Send Your Liability Waiver</div>
+      <div class="step-meta"><span class="badge badge-required">Required</span></div>
+    </div>
+    <span class="step-chevron">›</span>
+  </div>
+  <div class="step-body">
+    <div class="step-body-inner">
+      <div class="step-description">Every organization participating in RAYZIT Renew needs a signed liability waiver on file before any goods are picked up, transported, sorted, or distributed. Download the waiver below, review it with whoever will sign on behalf of your organization, sign it, and send it to support@rayzit.com.</div>
+      <div class="tip-box"><strong>Tip</strong>This is a general template. If your state requires localized language, flag it in your email and our team will follow up before you begin picking up goods.</div>
+      <div class="step-actions">
+        <a href="RAYZIT_Renew_Liability_Waiver.pdf" target="_blank" class="btn btn-blue" onclick="event.stopPropagation()">📄 Download Waiver (PDF)</a>
+        <a href="mailto:support@rayzit.com?subject=RAYZIT%20Renew%20Liability%20Waiver" class="btn btn-navy" onclick="event.stopPropagation()">✉ Email to support@rayzit.com</a>
+      </div>
+      <button class="mark-done-btn" onclick="markDone(1, event)"><span id="done-label-1">✓ Mark Step Complete</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="phase-header">
+  <span class="phase-badge">How It Works</span>
+  <span class="phase-title">RAYZIT Renew Logistics</span>
+  <div class="phase-line"></div>
+</div>
+
+<div class="info-card">
+  <p>RAYZIT Renew connects your organization with manufacturers that have surplus goods they cannot sell under their compliance policies because of minor packaging damage.</p>
+  <ul>
+    <li><span class="sni">1</span>The rate at which manufacturers identify and collect products that do not meet their standard distribution requirements.</li>
+    <li><span class="sni">2</span>The number of organizations in your area participating in the RAYZIT Renew program.</li>
+  </ul>
+  <p style="margin-bottom:0;">The products available through this program are not predetermined. They depend entirely on which items are damaged during the manufacturer's operations at any given time.</p>
+</div>
+
+<div class="phase-header">
+  <span class="phase-badge">Next</span>
+  <span class="phase-title">Schedule Your Meeting</span>
+  <div class="phase-line"></div>
+</div>
+
+<div class="step-card" id="step-2" onclick="toggleStep(2)">
+  <div class="step-header">
+    <div class="step-check" id="check-2">✓</div>
+    <div class="step-num-badge">2</div>
+    <div class="step-info">
+      <div class="step-name">Schedule a Meeting With a RAYZIT Renew Specialist</div>
+      <div class="step-meta"><span class="badge badge-next">Final Step</span></div>
+    </div>
+    <span class="step-chevron">›</span>
+  </div>
+  <div class="step-body">
+    <div class="step-body-inner">
+      <div class="step-description">Once your waiver is on file, a Renew Specialist will walk your organization through how the program runs day to day and get you set up to start receiving goods.</div>
+      <div class="step-actions">
+        <a href="#appointment" class="btn btn-gold" onclick="event.stopPropagation()">📅 Schedule Your Meeting</a>
+      </div>
+      <button class="mark-done-btn" onclick="markDone(2, event)"><span id="done-label-2">✓ Mark Step Complete</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="complete-banner" id="completeBanner">
+  <div style="font-size:42px;margin-bottom:12px;">🎉</div>
+  <h2>You're All Set</h2>
+  <p>Your waiver is on file and your specialist meeting is on the calendar. We'll be in touch with next steps.</p>
+</div>
+
+<div class="appt-section" id="appointment">
+  <div class="appt-title">📅 Set Your Appointment</div>
+  <div class="appt-desc">Book time directly with a RAYZIT Renew Specialist, or leave your info below and our team will reach out within 24 hours.</div>
+  <a href="https://cal.com/fredbethel/rayzit-renew" target="_blank" class="btn btn-navy" style="display:inline-flex;margin-bottom:4px;">📅 Book a Call</a>
+  <div class="appt-divider">
+    <div class="appt-divider-line"></div>
+    <span class="appt-divider-text">or leave your info</span>
+    <div class="appt-divider-line"></div>
+  </div>
+  <div class="appt-form" id="apptForm">
+    <input type="text" placeholder="Your name" id="apptName" />
+    <input type="text" placeholder="Your organization name" id="apptOrg" />
+    <input type="email" placeholder="Your email" id="apptEmail" />
+    <textarea placeholder="Best days or times to reach you (optional)" id="apptNote"></textarea>
+    <button class="appt-submit" id="apptSubmitBtn" onclick="submitAppointment()">Request a Callback</button>
+  </div>
+  <div class="appt-error" id="apptError">Something went wrong. Please email support@rayzit.com directly.</div>
+  <div class="appt-sent" id="apptSent">✅ Got it. A Renew Specialist will reach out within 24 hours.</div>
+</div>
+
+<div class="contact-card">
+  <div class="contact-info">
+    <h3>RAYZIT Renew Specialist</h3>
+    <p>support@rayzit.com</p>
+    <span class="contact-badge">Responds within 24 hrs</span>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="footer-sub">RAYZIT Renew Support: support@rayzit.com</span>
+</div>
+
+</div>
+
+<script>
+  var TOTAL = 2;
+  var completed = [false, false, false];
+
+  function toggleStep(n) {
+    var card = document.getElementById('step-' + n);
+    var isOpen = card.classList.contains('open');
+    for (var i = 1; i <= TOTAL; i++) {
+      document.getElementById('step-' + i).classList.remove('open', 'active');
+    }
+    if (!isOpen) { card.classList.add('open', 'active'); }
+  }
+
+  function markDone(n, e) {
+    e.stopPropagation();
+    var card = document.getElementById('step-' + n);
+    var label = document.getElementById('done-label-' + n);
+    if (completed[n]) {
+      completed[n] = false;
+      card.classList.remove('completed');
+      label.textContent = '✓ Mark Step Complete';
+    } else {
+      completed[n] = true;
+      card.classList.add('completed');
+      card.classList.remove('open', 'active');
+      label.textContent = '↩ Undo';
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var count = 0;
+    for (var i = 1; i <= TOTAL; i++) { if (completed[i]) count++; }
+    var pct = Math.round((count / TOTAL) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressCount').textContent = count + ' of ' + TOTAL + ' complete';
+    if (count === TOTAL) { document.getElementById('completeBanner').classList.add('visible'); }
+    else { document.getElementById('completeBanner').classList.remove('visible'); }
+  }
+
+  async function submitAppointment() {
+    var name = document.getElementById('apptName').value.trim();
+    var org = document.getElementById('apptOrg').value.trim();
+    var email = document.getElementById('apptEmail').value.trim();
+    var note = document.getElementById('apptNote').value.trim();
+    if (!name || !org || !email) { alert('Please fill in your name, organization, and email.'); return; }
+    var btn = document.getElementById('apptSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    var payload = { name: name, organization: org, email: email, note: note || 'No additional details provided.', source: 'renew', submitted_at: new Date().toISOString() };
+    try {
+      await fetch('https://hook.us2.make.com/5p0ylt8hddjm6n0fc0yvjq2ka7dxgo5y', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      document.getElementById('apptForm').style.display = 'none';
+      document.getElementById('apptSent').style.display = 'block';
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Request a Callback';
+      document.getElementById('apptError').style.display = 'block';
+    }
+  }
+
+  toggleStep(1);
+</script>
+</body>
+</html>
