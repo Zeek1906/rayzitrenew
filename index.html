@@ -200,8 +200,6 @@
   }
 
   .step-card.learn-card .step-body { }
-  .do-card .step-body { display: block; border-top: 2px solid var(--border); }
-  .do-card .step-header { cursor: default; }
   .do-card { border-color: rgba(0,116,255,0.35); }
   .do-card.completed { border-color: var(--green); }
   .quick-bar { background: #fff; border: 2px solid var(--blue); border-radius: var(--radius); padding: 16px 18px; margin: 24px 0 0; box-shadow: var(--shadow); }
@@ -434,11 +432,12 @@
   <div class="phase-line"></div>
 </div>
 
-<div class="step-card do-card open" id="card-3.1">
-  <div class="step-header">
+<div class="step-card do-card" id="card-3.1">
+  <div class="step-header" onclick="openDo('3.1')">
     <div class="step-check">✓</div>
     <div class="step-num-badge">1</div>
     <div class="step-info"><div class="step-name">Schedule Your Meeting</div><div class="step-meta"><span class="badge badge-next">Meeting</span></div></div>
+    <span class="step-chevron">›</span>
   </div>
   <div class="step-body"><div class="step-body-inner"><div class="sub-section">
 <p>Schedule a 30-minute call with a RAYZIT Renew Specialist to discuss your organizational needs and explore how the RAYZIT Renew program and the RAYZIT app can help advance your mission.</p>
@@ -450,11 +449,12 @@
   </div></div></div>
 </div>
 
-<div class="step-card do-card open" id="card-3.4">
-  <div class="step-header">
+<div class="step-card do-card" id="card-3.4">
+  <div class="step-header" onclick="openDo('3.4')">
     <div class="step-check">✓</div>
     <div class="step-num-badge">2</div>
     <div class="step-info"><div class="step-name">Create Your Free RAYZIT App</div><div class="step-meta"><span class="badge badge-next">Most important</span></div></div>
+    <span class="step-chevron">›</span>
   </div>
   <div class="step-body"><div class="step-body-inner"><div class="sub-section">
 <p>Visit our website to submit the required information needed to begin creating your FREE RAYZIT App:</p>
@@ -465,11 +465,12 @@
   </div></div></div>
 </div>
 
-<div class="step-card do-card open" id="card-4.1">
-  <div class="step-header">
+<div class="step-card do-card" id="card-4.1">
+  <div class="step-header" onclick="openDo('4.1')">
     <div class="step-check">✓</div>
     <div class="step-num-badge">3</div>
     <div class="step-info"><div class="step-name">Become Part of the RAYZIT Community</div><div class="step-meta"><span class="badge badge-next">Join</span></div></div>
+    <span class="step-chevron">›</span>
   </div>
   <div class="step-body"><div class="step-body-inner"><div class="sub-section">
 <div class="sub-kicker">Tutorials, Camaraderie and Live Events</div>
@@ -547,6 +548,13 @@
     var card = document.getElementById('card-' + k);
     var was = card.classList.contains('open');
     LEARN.forEach(function (x) { document.getElementById('card-' + x).classList.remove('open', 'active'); });
+    if (!was) { card.classList.add('open', 'active'); }
+  }
+
+  function openDo(k) {
+    var card = document.getElementById('card-' + k);
+    var was = card.classList.contains('open');
+    DO.forEach(function (x) { document.getElementById('card-' + x).classList.remove('open', 'active'); });
     if (!was) { card.classList.add('open', 'active'); }
   }
 
