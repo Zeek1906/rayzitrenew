@@ -198,6 +198,25 @@
     .req-table td:first-child { width: 38%; }
     .req-table th, .req-table td { padding: 10px; }
   }
+
+  .step-card.learn-card .step-body { }
+  .do-card .step-body { display: block; border-top: 2px solid var(--border); }
+  .do-card .step-header { cursor: default; }
+  .do-card { border-color: rgba(0,116,255,0.35); }
+  .do-card.completed { border-color: var(--green); }
+  .quick-bar { background: #fff; border: 2px solid var(--blue); border-radius: var(--radius); padding: 16px 18px; margin: 24px 0 0; box-shadow: var(--shadow); }
+  .quick-bar .qb-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .quick-bar .qb-title { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+  .quick-bar .qb-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .phase-sub { font-size: 12px; color: var(--muted); margin: -4px 0 12px; line-height: 1.5; }
+  .progress-split { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 1px; white-space: nowrap; }
+  @media (max-width: 600px) { .quick-bar .btn { width: 100%; justify-content: center; } }
+  .qb-parts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px; }
+  .qb-part { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; text-decoration: none; transition: border-color 0.15s; }
+  .qb-part:hover { border-color: var(--blue); }
+  .qb-part-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+  .qb-part-desc { font-size: 13px; color: #555; line-height: 1.6; }
+  @media (max-width: 640px) { .qb-parts { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -210,10 +229,8 @@
 <div class="progress-wrap">
   <div class="progress-inner">
     <span class="progress-label">Your Progress</span>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progressFill"></div>
-    </div>
-    <span class="progress-count" id="progressCount">0 of 4 complete</span>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <span class="progress-split" id="progressCount">Learn 0/7 · Steps 0/3</span>
   </div>
 </div>
 
@@ -222,44 +239,53 @@
   <h1>Let's Get Your<br><span>Renew Program Started.</span></h1>
   <p>Watch the intro and schedule an appointment with a RAYZIT Renew Specialist. With just a few steps, your organization will be ready to start receiving surplus goods.</p>
   <div class="hero-stats">
-    <div class="hero-stat">
-      <span class="hero-stat-num">4</span>
-      <span class="hero-stat-label">Steps to Start</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-num">2.2 min</span>
-      <span class="hero-stat-label">Intro Video</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-num">24hr</span>
-      <span class="hero-stat-label">Support Response</span>
-    </div>
+    <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">Next Steps</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">2.2 min</span><span class="hero-stat-label">Intro Video</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">24hr</span><span class="hero-stat-label">Support Response</span></div>
   </div>
 </div>
 
 <div class="content">
 
-<div class="phase-header">
-  <span class="phase-badge">Start Here</span>
-  <span class="phase-title">Your RAYZIT Renew Steps</span>
-  <div class="phase-line"></div>
+<div class="quick-bar">
+  <div class="qb-label">Ready to get started?</div>
+  <div class="qb-title">Here is how this page works.</div>
+  <div class="qb-parts">
+    <a href="#part1" class="qb-part">
+      <span class="phase-badge">Part 1</span>
+      <span class="qb-part-title">Learn How It Works</span>
+      <span class="qb-part-desc">Seven short pieces that explain what RAYZIT Renew is, what your organization needs to qualify, how to participate, what to have ready, and how the RAYZIT App and its fees work.</span>
+    </a>
+    <a href="#do" class="qb-part">
+      <span class="phase-badge">Part 2</span>
+      <span class="qb-part-title">Your Next Steps</span>
+      <span class="qb-part-desc">Three actions that get your organization moving: schedule your meeting with a Renew Specialist, create your free RAYZIT App, and join the RAYZIT Community.</span>
+    </a>
+  </div>
+  <div class="qb-label" style="margin-top:16px;">Already know what you need? Go straight to:</div>
+  <div class="qb-actions">
+    <a href="#appointment" class="btn btn-gold">📅 Schedule Your Meeting</a>
+    <a href="https://rayzit.com/demo-sign-up/" target="_blank" rel="noopener" class="btn btn-blue">Create Your Free RAYZIT App</a>
+    <a href="#" id="communityBtnTop" target="_blank" rel="noopener" class="btn btn-navy">Join the RAYZIT Community</a>
+  </div>
 </div>
 
-<!-- STEP 1: INTRO -->
-<div class="step-card" id="step-1">
-  <div class="step-header" onclick="toggleStep(1)">
-    <div class="step-check" id="check-1">✓</div>
+<div class="phase-header" id="part1">
+  <span class="phase-badge">Part 1</span>
+  <span class="phase-title">Learn How It Works</span>
+  <div class="phase-line"></div>
+</div>
+<div class="phase-sub">Seven short pieces. Open one, tap Mark As Reviewed, and the next one opens.</div>
+
+<div class="step-card learn-card" id="card-1.1">
+  <div class="step-header" onclick="openLearn('1.1')">
+    <div class="step-check">✓</div>
     <div class="step-num-badge">1</div>
-    <div class="step-info">
-      <div class="step-name">Intro: Watch the Welcome Video</div>
-      <div class="step-meta"><span class="badge badge-required">Start here</span></div>
-    </div>
+    <div class="step-info"><div class="step-name">Watch the Welcome Video</div><div class="step-meta"><span class="badge badge-count">2.2 min</span></div></div>
     <span class="step-chevron">›</span>
   </div>
-  <div class="step-body">
-    <div class="step-body-inner">
-      <div class="sub-section">
-        <div class="video-player-card">
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<div class="video-player-card">
           <div class="video-player-label">
             <span class="video-player-label-text">The RAYZIT Renew Welcome</span>
             <span class="video-player-badge">Watch First</span>
@@ -268,29 +294,19 @@
             <video controls preload="metadata" src="https://www.dropbox.com/scl/fi/yp0nsjp8tuxssfawv9u10/RAYZIT-Renew-Welcome.mp4?rlkey=h0vao26i3lsi32za4b4jljqcm&st=7pkq6jp3&raw=1"></video>
           </div>
         </div>
-        <button class="sub-done-btn" data-sub="1.1" onclick="markSub('1.1', this)">Mark As Reviewed</button>
-      </div>
-    </div>
-  </div>
+    <button class="sub-done-btn" data-sub="1.1" onclick="markSub('1.1')">Mark As Reviewed</button>
+  </div></div></div>
 </div>
 
-<!-- STEP 2: ORGANIZATION PARTICIPATION INSTRUCTIONS -->
-<div class="step-card" id="step-2">
-  <div class="step-header" onclick="toggleStep(2)">
-    <div class="step-check" id="check-2">✓</div>
+<div class="step-card learn-card" id="card-2.1">
+  <div class="step-header" onclick="openLearn('2.1')">
+    <div class="step-check">✓</div>
     <div class="step-num-badge">2</div>
-    <div class="step-info">
-      <div class="step-name">Organization Participation Instructions</div>
-      <div class="step-meta"><span class="badge badge-required">Required</span><span class="badge badge-count" id="count-2">0 of 4 reviewed</span></div>
-    </div>
+    <div class="step-info"><div class="step-name">What RAYZIT Renew Is</div><div class="step-meta"><span class="badge badge-count">Read</span></div></div>
     <span class="step-chevron">›</span>
   </div>
-  <div class="step-body">
-    <div class="step-body-inner">
-
-      <div class="sub-section">
-        <div class="sub-head"><span class="sub-badge">How It Works</span><span class="sub-title">What RAYZIT Renew Is</span></div>
-        <p>RAYZIT Renew prepares your organization to receive charitable contributions from donor organizations such as Amazon that cannot sell certain items under their compliance policies because of minor packaging damage. With the RAYZIT Renew program, we will teach you step by step how to build real relationships with donor partners and pair those contributions with the RAYZIT app to grow your own revenue.</p>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<p>RAYZIT Renew prepares your organization to receive charitable contributions from donor organizations such as Amazon that cannot sell certain items under their compliance policies because of minor packaging damage. With the RAYZIT Renew program, we will teach you step by step how to build real relationships with donor partners and pair those contributions with the RAYZIT app to grow your own revenue.</p>
         <div class="proof-box">The RAYZIT Renew program has helped organizations such as the HEALS Network, Inc., where they routinely receive cycles of surplus goods valued on average of around $90K, helping them serve approximately 450 families.</div>
         <p>These goods are available subject to the following conditions:</p>
         <ul class="num-list">
@@ -298,12 +314,19 @@
           <li><span class="sni">2</span><span>The number of organizations in your area participating in the RAYZIT Renew program.</span></li>
         </ul>
         <p>The products available through this program are not predetermined. They depend entirely on which items are damaged during the manufacturer's operations at any given time.</p>
-        <button class="sub-done-btn" data-sub="2.1" onclick="markSub('2.1', this)">Mark As Reviewed</button>
-      </div>
+    <button class="sub-done-btn" data-sub="2.1" onclick="markSub('2.1')">Mark As Reviewed</button>
+  </div></div></div>
+</div>
 
-      <div class="sub-section">
-        <div class="sub-head"><span class="sub-badge">Qualify</span><span class="sub-title">What You Need To Qualify</span></div>
-        <table class="req-table">
+<div class="step-card learn-card" id="card-2.2">
+  <div class="step-header" onclick="openLearn('2.2')">
+    <div class="step-check">✓</div>
+    <div class="step-num-badge">3</div>
+    <div class="step-info"><div class="step-name">What You Need To Qualify</div><div class="step-meta"><span class="badge badge-count">Read</span></div></div>
+    <span class="step-chevron">›</span>
+  </div>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<table class="req-table">
           <thead><tr><th>Requirement</th><th>What to Provide</th></tr></thead>
           <tbody>
             <tr><td>Legal Status</td><td>IRS determination letter showing 501(c)(3) status, or proof of fiscal sponsor</td></tr>
@@ -314,12 +337,19 @@
             <tr><td>Board Commitment</td><td>Board or leadership agreement to run the Seven-Day Launch</td></tr>
           </tbody>
         </table>
-        <button class="sub-done-btn" data-sub="2.2" onclick="markSub('2.2', this)">Mark As Reviewed</button>
-      </div>
+    <button class="sub-done-btn" data-sub="2.2" onclick="markSub('2.2')">Mark As Reviewed</button>
+  </div></div></div>
+</div>
 
-      <div class="sub-section">
-        <div class="sub-head"><span class="sub-badge">Process</span><span class="sub-title">How To Participate</span></div>
-        <ul class="num-list">
+<div class="step-card learn-card" id="card-2.3">
+  <div class="step-header" onclick="openLearn('2.3')">
+    <div class="step-check">✓</div>
+    <div class="step-num-badge">4</div>
+    <div class="step-info"><div class="step-name">How To Participate</div><div class="step-meta"><span class="badge badge-count">Read</span></div></div>
+    <span class="step-chevron">›</span>
+  </div>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<ul class="num-list">
           <li><span class="sni">1</span><span><strong>Schedule</strong> an informational call (20 to 30 min) to learn the process and get your path assigned.</span></li>
           <li><span class="sni">2</span><span><strong>Create</strong> your Free RAYZIT App.</span></li>
           <li><span class="sni">3</span><span><strong>Join</strong> the RAYZIT Community to complete the RAYZIT knowledge base, onboarding and marketing modules.</span></li>
@@ -327,12 +357,19 @@
           <li><span class="sni">5</span><span><strong>Run the Seven-Day Launch</strong> to activate your board, supporters and community on RAYZIT.</span></li>
           <li><span class="sni">6</span><span><strong>Get matched with a donor partner</strong> once your documents and the above readiness are confirmed.</span></li>
         </ul>
-        <button class="sub-done-btn" data-sub="2.3" onclick="markSub('2.3', this)">Mark As Reviewed</button>
-      </div>
+    <button class="sub-done-btn" data-sub="2.3" onclick="markSub('2.3')">Mark As Reviewed</button>
+  </div></div></div>
+</div>
 
-      <div class="sub-section">
-        <div class="sub-head"><span class="sub-badge">Readiness</span><span class="sub-title">Be Ready To Receive</span></div>
-        <p>Donor partners need confidence that items reach the community quickly and are accounted for. Thus, below are the following expectations:</p>
+<div class="step-card learn-card" id="card-2.4">
+  <div class="step-header" onclick="openLearn('2.4')">
+    <div class="step-check">✓</div>
+    <div class="step-num-badge">5</div>
+    <div class="step-info"><div class="step-name">Be Ready To Receive</div><div class="step-meta"><span class="badge badge-count">Read</span></div></div>
+    <span class="step-chevron">›</span>
+  </div>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<p>Donor partners need confidence that items reach the community quickly and are accounted for. Thus, below are the following expectations:</p>
         <ul class="num-list">
           <li><span class="sni">1</span><span><strong>Pickup:</strong> a vehicle or volunteer team able to collect within the donor's window, usually 24 to 72 hours.</span></li>
           <li><span class="sni">2</span><span><strong>Storage:</strong> clean, dry, secure space sized for the donations you request; cold storage if accepting food.</span></li>
@@ -342,40 +379,19 @@
           <li><span class="sni">6</span><span><strong>No resale:</strong> donated items go to the community at no cost and are never resold.</span></li>
           <li><span class="sni">7</span><span><strong>Reporting:</strong> send an impact report with photos within 30 days of each contribution.</span></li>
         </ul>
-        <button class="sub-done-btn" data-sub="2.4" onclick="markSub('2.4', this)">Mark As Reviewed</button>
-      </div>
-
-    </div>
-  </div>
+    <button class="sub-done-btn" data-sub="2.4" onclick="markSub('2.4')">Mark As Reviewed</button>
+  </div></div></div>
 </div>
 
-<!-- STEP 3: SCHEDULE + CREATE APP -->
-<div class="step-card" id="step-3">
-  <div class="step-header" onclick="toggleStep(3)">
-    <div class="step-check" id="check-3">✓</div>
-    <div class="step-num-badge">3</div>
-    <div class="step-info">
-      <div class="step-name">Schedule Your Meeting &amp; Create Your Free RAYZIT App</div>
-      <div class="step-meta"><span class="badge badge-required">Required</span><span class="badge badge-count" id="count-3">0 of 4 done</span></div>
-    </div>
+<div class="step-card learn-card" id="card-3.2">
+  <div class="step-header" onclick="openLearn('3.2')">
+    <div class="step-check">✓</div>
+    <div class="step-num-badge">6</div>
+    <div class="step-info"><div class="step-name">Why Complement Your RAYZIT Renew Campaign with the RAYZIT App?</div><div class="step-meta"><span class="badge badge-count">Read</span></div></div>
     <span class="step-chevron">›</span>
   </div>
-  <div class="step-body">
-    <div class="step-body-inner">
-
-      <div class="sub-section">
-        <div class="sub-head"><span class="sub-badge">Meeting</span><span class="sub-title">Schedule Your Meeting</span></div>
-        <p>Schedule a 30-minute call with a RAYZIT Renew Specialist to discuss your organizational needs and explore how the RAYZIT Renew program and the RAYZIT app can help advance your mission.</p>
-        <p>Please note that due to the large number of inquiries regarding this service, availability for a slotted call may extend beyond reasonable time frames. We apologize in advance for this inconvenience.</p>
-        <div class="step-actions" style="margin:12px 0 0;">
-          <a href="#appointment" class="btn btn-gold">📅 Schedule Your Meeting</a>
-        </div>
-        <button class="sub-done-btn" data-sub="3.1" onclick="markSub('3.1', this)">Mark As Done</button>
-      </div>
-
-      <div class="sub-section">
-        <div class="sub-head"><span class="sub-badge">Why</span><span class="sub-title">Why Complement Your RAYZIT Renew Campaign with the RAYZIT App?</span></div>
-        <p>RAYZIT Renew connects organizations with a supply of goods. The RAYZIT App turns the goodwill that supply creates into recurring revenue. Here's why:</p>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<p>RAYZIT Renew connects organizations with a supply of goods. The RAYZIT App turns the goodwill that supply creates into recurring revenue. Here's why:</p>
         <ul class="num-list">
           <li><span class="sni">1</span><span>Distribution events draw crowds, producing potential new donors.</span></li>
           <li><span class="sni">2</span><span>Volunteers become supporters, more willing to give now that they have a personal stake in the mission.</span></li>
@@ -385,12 +401,19 @@
           <li><span class="sni">6</span><span>RAYZIT Renew is supply. The RAYZIT App is sustainability.</span></li>
           <li><span class="sni">7</span><span>Without the RAYZIT App, organizations depend on grants and one-off fundraising to support their mission.</span></li>
         </ul>
-        <button class="sub-done-btn" data-sub="3.2" onclick="markSub('3.2', this)">Mark As Reviewed</button>
-      </div>
+    <button class="sub-done-btn" data-sub="3.2" onclick="markSub('3.2')">Mark As Reviewed</button>
+  </div></div></div>
+</div>
 
-      <div class="sub-section">
-        <div class="sub-head"><span class="sub-badge">Fees</span><span class="sub-title">RAYZIT App Fees</span></div>
-        <p>RAYZIT fees are one of the lowest in the donation platform industry. For organizations receiving donations, there is a one-time bank connection cost of $1.50 plus a $0.30 monthly service fee. In receiving donations, there is a minimal transaction fee:</p>
+<div class="step-card learn-card" id="card-3.3">
+  <div class="step-header" onclick="openLearn('3.3')">
+    <div class="step-check">✓</div>
+    <div class="step-num-badge">7</div>
+    <div class="step-info"><div class="step-name">RAYZIT App Fees</div><div class="step-meta"><span class="badge badge-count">Read</span></div></div>
+    <span class="step-chevron">›</span>
+  </div>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<p>RAYZIT fees are one of the lowest in the donation platform industry. For organizations receiving donations, there is a one-time bank connection cost of $1.50 plus a $0.30 monthly service fee. In receiving donations, there is a minimal transaction fee:</p>
         <p><span class="fee-free">NO COST</span> for app creation</p>
         <table class="req-table fee-table">
           <thead><tr><th>Donation Type</th><th style="text-align:right;">Transaction Fee</th></tr></thead>
@@ -401,37 +424,55 @@
             <tr><td>One-Off donation (Standard)</td><td>4.3% + $0.30</td></tr>
           </tbody>
         </table>
-        <button class="sub-done-btn" data-sub="3.3" onclick="markSub('3.3', this)">Mark As Reviewed</button>
-      </div>
+    <button class="sub-done-btn" data-sub="3.3" onclick="markSub('3.3')">Mark As Reviewed</button>
+  </div></div></div>
+</div>
 
-      <div class="sub-section">
-        <div class="sub-head"><span class="sub-badge">Final Step</span><span class="sub-title">Create Your Free RAYZIT App</span></div>
-        <p>Visit our website to submit the required information needed to begin creating your FREE RAYZIT App:</p>
+<div class="phase-header" id="do">
+  <span class="phase-badge">Part 2</span>
+  <span class="phase-title">Your Next Steps</span>
+  <div class="phase-line"></div>
+</div>
+
+<div class="step-card do-card open" id="card-3.1">
+  <div class="step-header">
+    <div class="step-check">✓</div>
+    <div class="step-num-badge">1</div>
+    <div class="step-info"><div class="step-name">Schedule Your Meeting</div><div class="step-meta"><span class="badge badge-next">Meeting</span></div></div>
+  </div>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<p>Schedule a 30-minute call with a RAYZIT Renew Specialist to discuss your organizational needs and explore how the RAYZIT Renew program and the RAYZIT app can help advance your mission.</p>
+        <p>Please note that due to the large number of inquiries regarding this service, availability for a slotted call may extend beyond reasonable time frames. We apologize in advance for this inconvenience.</p>
+        <div class="step-actions" style="margin:12px 0 0;">
+          <a href="#appointment" class="btn btn-gold">📅 Schedule Your Meeting</a>
+        </div>
+    <button class="sub-done-btn" data-sub="3.1" onclick="markSub('3.1')">Mark As Done</button>
+  </div></div></div>
+</div>
+
+<div class="step-card do-card open" id="card-3.4">
+  <div class="step-header">
+    <div class="step-check">✓</div>
+    <div class="step-num-badge">2</div>
+    <div class="step-info"><div class="step-name">Create Your Free RAYZIT App</div><div class="step-meta"><span class="badge badge-next">Most important</span></div></div>
+  </div>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<p>Visit our website to submit the required information needed to begin creating your FREE RAYZIT App:</p>
         <div class="step-actions" style="margin:12px 0 0;">
           <a href="https://rayzit.com/demo-sign-up/" target="_blank" rel="noopener" class="btn btn-blue">Create Your Free RAYZIT App</a>
         </div>
-        <button class="sub-done-btn" data-sub="3.4" onclick="markSub('3.4', this)">Mark As Done</button>
-      </div>
-
-    </div>
-  </div>
+    <button class="sub-done-btn" data-sub="3.4" onclick="markSub('3.4')">Mark As Done</button>
+  </div></div></div>
 </div>
 
-<!-- STEP 4: COMMUNITY -->
-<div class="step-card" id="step-4">
-  <div class="step-header" onclick="toggleStep(4)">
-    <div class="step-check" id="check-4">✓</div>
-    <div class="step-num-badge">4</div>
-    <div class="step-info">
-      <div class="step-name">Become Part of the RAYZIT Community</div>
-      <div class="step-meta"><span class="badge badge-next">Join</span></div>
-    </div>
-    <span class="step-chevron">›</span>
+<div class="step-card do-card open" id="card-4.1">
+  <div class="step-header">
+    <div class="step-check">✓</div>
+    <div class="step-num-badge">3</div>
+    <div class="step-info"><div class="step-name">Become Part of the RAYZIT Community</div><div class="step-meta"><span class="badge badge-next">Join</span></div></div>
   </div>
-  <div class="step-body">
-    <div class="step-body-inner">
-      <div class="sub-section">
-        <div class="sub-kicker">Tutorials, Camaraderie and Live Events</div>
+  <div class="step-body"><div class="step-body-inner"><div class="sub-section">
+<div class="sub-kicker">Tutorials, Camaraderie and Live Events</div>
         <p>Join the RAYZIT Community where you will have access to:</p>
         <ul class="community-list">
           <li>Tutorials on RAYZIT App product knowledge</li>
@@ -445,10 +486,8 @@
         <div class="step-actions" style="margin:12px 0 0;">
           <a href="#" id="communityBtn" target="_blank" rel="noopener" class="btn btn-blue">Join the RAYZIT Community</a>
         </div>
-        <button class="sub-done-btn" data-sub="4.1" onclick="markSub('4.1', this)">Mark As Done</button>
-      </div>
-    </div>
-  </div>
+    <button class="sub-done-btn" data-sub="4.1" onclick="markSub('4.1')">Mark As Done</button>
+  </div></div></div>
 </div>
 
 <div class="complete-banner" id="completeBanner">
@@ -491,61 +530,52 @@
 
 </div>
 
+
 <script>
-  // Set this to the RAYZIT Circle community invite link. Until it is set, the button opens an email to support.
+  // RAYZIT Circle invite link
   var COMMUNITY_URL = 'https://rayzit-community.circle.so/join?invitation_token=e5969e3885ade6ade117ec83408cb4ee64a7f0e3-08c57c81-4a77-4281-b513-96a366b467a9';
 
-  var STRUCTURE = { 1: ['1.1'], 2: ['2.1','2.2','2.3','2.4'], 3: ['3.1','3.2','3.3','3.4'], 4: ['4.1'] };
-  var TOTAL = 4;
+  var LEARN = ['1.1','2.1','2.2','2.3','2.4','3.2','3.3'];
+  var DO = ['3.1','3.4','4.1'];
   var done = {};
-  var STORE_KEY = 'rayzitRenewProgress';
+  var STORE_KEY = 'rayzitRenewProgressV3';
 
   function loadState() { try { var s = localStorage.getItem(STORE_KEY); if (s) done = JSON.parse(s) || {}; } catch (e) { done = {}; } }
   function saveState() { try { localStorage.setItem(STORE_KEY, JSON.stringify(done)); } catch (e) {} }
 
-  function toggleStep(n) {
-    var card = document.getElementById('step-' + n);
-    var isOpen = card.classList.contains('open');
-    for (var i = 1; i <= TOTAL; i++) { document.getElementById('step-' + i).classList.remove('open', 'active'); }
-    if (!isOpen) { card.classList.add('open', 'active'); }
+  function openLearn(k) {
+    var card = document.getElementById('card-' + k);
+    var was = card.classList.contains('open');
+    LEARN.forEach(function (x) { document.getElementById('card-' + x).classList.remove('open', 'active'); });
+    if (!was) { card.classList.add('open', 'active'); }
   }
 
-  function stepComplete(n) { return STRUCTURE[n].every(function (k) { return done[k]; }); }
-
-  function markSub(key, btn) {
-    done[key] = !done[key];
+  function markSub(k) {
+    done[k] = !done[k];
     saveState();
     render();
-    var n = parseInt(key.split('.')[0], 10);
-    if (done[key] && stepComplete(n)) {
-      var next = n + 1;
-      if (next <= TOTAL) { toggleStep(next); document.getElementById('step-' + next).scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    if (done[k] && LEARN.indexOf(k) > -1) {
+      var i = LEARN.indexOf(k);
+      var next = LEARN.slice(i + 1).filter(function (x) { return !done[x]; })[0];
+      if (next) { openLearn(next); document.getElementById('card-' + next).scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      else { LEARN.forEach(function (x) { document.getElementById('card-' + x).classList.remove('open', 'active'); }); document.getElementById('do').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     }
   }
 
   function render() {
-    var count = 0;
     document.querySelectorAll('.sub-done-btn').forEach(function (b) {
       var k = b.getAttribute('data-sub');
-      if (!b.getAttribute('data-label')) { b.setAttribute('data-label', b.textContent.replace(/^✓ /, '')); }
+      if (!b.getAttribute('data-label')) { b.setAttribute('data-label', b.textContent); }
       var label = b.getAttribute('data-label');
       b.classList.toggle('done', !!done[k]);
       b.textContent = done[k] ? '✓ ' + label.replace('Mark As Reviewed', 'Reviewed').replace('Mark As Done', 'Done') + ' (tap to undo)' : label;
+      document.getElementById('card-' + k).classList.toggle('completed', !!done[k]);
     });
-    for (var n = 1; n <= TOTAL; n++) {
-      var complete = stepComplete(n);
-      var card = document.getElementById('step-' + n);
-      card.classList.toggle('completed', complete);
-      if (complete) count++;
-      var c = document.getElementById('count-' + n);
-      if (c) {
-        var d = STRUCTURE[n].filter(function (k) { return done[k]; }).length;
-        c.textContent = d + ' of ' + STRUCTURE[n].length + (n === 2 ? ' reviewed' : ' done');
-      }
-    }
-    document.getElementById('progressFill').style.width = Math.round((count / TOTAL) * 100) + '%';
-    document.getElementById('progressCount').textContent = count + ' of ' + TOTAL + ' complete';
-    document.getElementById('completeBanner').classList.toggle('visible', count === TOTAL);
+    var l = LEARN.filter(function (k) { return done[k]; }).length;
+    var d = DO.filter(function (k) { return done[k]; }).length;
+    document.getElementById('progressFill').style.width = Math.round(((l + d) / (LEARN.length + DO.length)) * 100) + '%';
+    document.getElementById('progressCount').textContent = 'Learn ' + l + '/' + LEARN.length + ' · Steps ' + d + '/' + DO.length;
+    document.getElementById('completeBanner').classList.toggle('visible', l === LEARN.length && d === DO.length);
   }
 
   async function submitAppointment() {
@@ -569,13 +599,18 @@
     }
   }
 
+
   (function init() {
-    var cb = document.getElementById('communityBtn');
-    if (COMMUNITY_URL) { cb.href = COMMUNITY_URL; }
-    else { cb.href = 'mailto:support@rayzit.com?subject=Join%20the%20RAYZIT%20Community'; cb.removeAttribute('target'); }
+    ['communityBtn', 'communityBtnTop'].forEach(function (id) {
+      var cb = document.getElementById(id);
+      if (!cb) return;
+      if (COMMUNITY_URL) { cb.href = COMMUNITY_URL; }
+      else { cb.href = 'mailto:support@rayzit.com?subject=Join%20the%20RAYZIT%20Community'; cb.removeAttribute('target'); }
+    });
     loadState();
     render();
-    toggleStep(1);
+    var first = LEARN.filter(function (k) { return !done[k]; })[0];
+    if (first) openLearn(first);
   })();
 </script>
 </body>
